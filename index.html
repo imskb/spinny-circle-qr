@@ -27,19 +27,37 @@
   </script>
 
   <style>
-    html,body { height:100%; margin:0; background:#0f1115; color:#f4f5f7;
+    :root { --purple:#3c1a5e; --purple-2:#2e1249; --red:#f5333f; --red-2:#ff5a63; }
+    html,body { height:100%; margin:0; background:var(--purple);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-    .wrap { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center; }
-    .logo { width:60px; height:60px; border-radius:15px; background:#ff4d4f; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; color:#fff; }
-    h1 { font-size:20px; margin:0; }
-    p { margin:0; color:#9aa0aa; font-size:14px; }
-    p a { color:#c9ced6; }
+    .wrap { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; padding:24px; text-align:center; }
+
+    /* --- Spinny Circle logo (CSS recreation) --- */
+    .logo { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .spinny { display:flex; align-items:center; gap:9px; }
+    .s-badge {
+      width:34px; height:34px; border-radius:10px;
+      background:linear-gradient(145deg,var(--red-2),var(--red));
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-weight:800; font-size:22px; line-height:1;
+      box-shadow:0 3px 10px rgba(245,51,63,.35);
+    }
+    .spinny-word { color:#fff; font-weight:700; font-size:24px; letter-spacing:.2px; }
+    .circle-word { color:#fff; font-weight:800; font-size:52px; line-height:1; letter-spacing:1px; }
+
+    p { margin:0; color:#c9bce0; font-size:14px; }
+    p a { color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.35); }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="logo">SC</div>
-    <h1>Spinny Circle</h1>
+    <div class="logo">
+      <div class="spinny">
+        <span class="s-badge">S</span>
+        <span class="spinny-word">Spinny</span>
+      </div>
+      <div class="circle-word">CIRCLE</div>
+    </div>
     <p>Open on your phone to download &middot;
       <a href="https://apps.apple.com/in/app/spinny-circle/id6755675833">App&nbsp;Store</a> &middot;
       <a href="https://play.google.com/store/apps/details?id=com.spinny.circle.prod">Google&nbsp;Play</a>
