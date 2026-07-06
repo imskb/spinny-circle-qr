@@ -18,10 +18,19 @@
       var IOS = "https://apps.apple.com/in/app/spinny-circle/id6755675833";
       var PLAY = "https://play.google.com/store/apps/details?id=com.spinny.circle.prod";
       var ua = navigator.userAgent || navigator.vendor || "";
-      var isAndroid = /android/i.test(ua);
+      var uadPlatform = ((navigator.userAgentData || {}).platform || "").toLowerCase();
+      var touch = navigator.maxTouchPoints || 0;
+
       var isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                  (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); // iPadOS 13+
-      var target = isAndroid ? PLAY : (isIOS ? IOS : null);
+                  (/Macintosh/.test(ua) && touch > 1);                 // iPadOS 13+ (reports as Mac)
+      var isAndroid = /android/i.test(ua) || uadPlatform === "android"; // Client Hints catches tablets in desktop mode
+      var isKnownDesktop = /Windows|Win64|Macintosh|CrOS/i.test(ua) ||
+                  ["windows", "macos", "chromeos", "chrome os"].indexOf(uadPlatform) !== -1;
+      // Android tablet requesting the desktop site loses the "Android"/"Mobile" tokens:
+      // a touch device that is neither iOS nor a known desktop OS is almost certainly an Android tablet.
+      var likelyAndroidTablet = !isIOS && !isAndroid && !isKnownDesktop && touch > 0;
+
+      var target = isIOS ? IOS : ((isAndroid || likelyAndroidTablet) ? PLAY : null);
       if (target) location.replace(target); // fires immediately, before body/CSS
     })();
   </script>
