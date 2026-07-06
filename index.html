@@ -5,64 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spinny Circle</title>
   <meta name="robots" content="noindex" />
+
+  <!-- Warm up the store connections in parallel (shaves the redirect hop). -->
+  <link rel="dns-prefetch" href="//apps.apple.com" />
+  <link rel="dns-prefetch" href="//play.google.com" />
+  <link rel="preconnect" href="https://apps.apple.com" crossorigin />
+  <link rel="preconnect" href="https://play.google.com" crossorigin />
+
+  <!-- Redirect runs FIRST, during head parse, before any rendering. Fastest possible. -->
+  <script>
+    (function () {
+      var IOS = "https://apps.apple.com/in/app/spinny-circle/id6755675833";
+      var PLAY = "https://play.google.com/store/apps/details?id=com.spinny.circle.prod";
+      var ua = navigator.userAgent || navigator.vendor || "";
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+                  (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); // iPadOS 13+
+      var target = isAndroid ? PLAY : (isIOS ? IOS : null);
+      if (target) location.replace(target); // fires immediately, before body/CSS
+    })();
+  </script>
+
   <style>
     html,body { height:100%; margin:0; background:#0f1115; color:#f4f5f7;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-    .wrap { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:24px; text-align:center; }
-    .logo { width:64px; height:64px; border-radius:16px; background:#ff4d4f; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:800; color:#fff; }
-    .spinner { width:26px; height:26px; border:3px solid rgba(255,255,255,.18); border-top-color:#ff4d4f; border-radius:50%; animation:spin .8s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    p { margin:0; color:#9aa0aa; font-size:15px; }
-    .fallback { font-size:13px; }
-    .fallback a { color:#9aa0aa; }
+    .wrap { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center; }
+    .logo { width:60px; height:60px; border-radius:15px; background:#ff4d4f; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; color:#fff; }
+    h1 { font-size:20px; margin:0; }
+    p { margin:0; color:#9aa0aa; font-size:14px; }
+    p a { color:#c9ced6; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="logo">SC</div>
-    <div class="spinner" id="spin"></div>
-    <p id="msg">Opening Spinny Circle&hellip;</p>
-    <p class="fallback" id="fallback" style="display:none;">
-      Didn&rsquo;t open?
+    <h1>Spinny Circle</h1>
+    <p>Open on your phone to download &middot;
       <a href="https://apps.apple.com/in/app/spinny-circle/id6755675833">App&nbsp;Store</a> &middot;
       <a href="https://play.google.com/store/apps/details?id=com.spinny.circle.prod">Google&nbsp;Play</a>
     </p>
   </div>
-
-  <script>
-    (function () {
-      var IOS_URL = "https://apps.apple.com/in/app/spinny-circle/id6755675833";
-      var PLAY_URL = "https://play.google.com/store/apps/details?id=com.spinny.circle.prod";
-
-      var ua = navigator.userAgent || navigator.vendor || window.opera || "";
-      var isAndroid = /android/i.test(ua);
-      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                  (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); // iPadOS 13+
-
-      var target = isAndroid ? PLAY_URL : (isIOS ? IOS_URL : null);
-
-      if (target) {
-        window.location.replace(target);
-        // Reveal a plain text fallback if the store didn't take over quickly.
-        setTimeout(function () {
-          document.getElementById("fallback").style.display = "";
-        }, 1200);
-      } else {
-        // Desktop / unknown device — no store to open, just point them.
-        document.getElementById("spin").style.display = "none";
-        document.getElementById("msg").textContent = "Open this link on your phone to download Spinny Circle.";
-        document.getElementById("fallback").style.display = "";
-      }
-    })();
-  </script>
-
-  <noscript>
-    <div class="wrap">
-      <p>Download Spinny Circle:
-        <a href="https://apps.apple.com/in/app/spinny-circle/id6755675833">App Store</a> ·
-        <a href="https://play.google.com/store/apps/details?id=com.spinny.circle.prod">Google Play</a>
-      </p>
-    </div>
-  </noscript>
 </body>
 </html>
